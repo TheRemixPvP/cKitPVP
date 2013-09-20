@@ -2,7 +2,10 @@ package me.theremixpvp.ckitpvp.cmds;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.logging.Level;
 
 import me.theremixpvp.ckitpvp.Main;
@@ -27,10 +30,12 @@ public class KitShop implements CommandExecutor {
 		plugin = main;
 	}
 	
+	List<String> shopkits = Arrays.asList("sniper", "tank");
+	List<Double> shopkitsp = Arrays.asList(100.0, 10.0);
 	
-	public static HashMap<String, Double> shopkits = new HashMap<String, Double>();
+	//public static HashMap<String, Double> shopkits = new HashMap<String, Double>();
 	
-	public static void load(Plugin p) {
+	/*public static void load(Plugin p) {
 		File f = new File(p.getDataFolder() + "/kitshop.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 		
@@ -55,7 +60,7 @@ public class KitShop implements CommandExecutor {
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 	
 	
 	
