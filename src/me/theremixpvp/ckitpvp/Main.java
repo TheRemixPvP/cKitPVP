@@ -11,11 +11,13 @@ import me.theremixpvp.ckitpvp.cmds.Kit;
 import me.theremixpvp.ckitpvp.cmds.KitShop;
 import me.theremixpvp.ckitpvp.cmds.Kits;
 import me.theremixpvp.ckitpvp.cmds.Stats;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Fisherman;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_PVP;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Sniper;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Tank;
 import me.theremixpvp.ckitpvp.listeners.DeathListener;
 import me.theremixpvp.ckitpvp.listeners.JoinListener;
+import me.theremixpvp.ckitpvp.listeners.kits.FishermanL;
 import me.theremixpvp.ckitpvp.listeners.kits.SniperL;
 import me.theremixpvp.ckitpvp.utils.Settings;
 
@@ -60,6 +62,7 @@ public class Main extends JavaPlugin {
 		getCommand("pvp").setExecutor(new Kit_PVP(this));
 		getCommand("tank").setExecutor(new Kit_Tank(this));
 		getCommand("sniper").setExecutor(new Kit_Sniper(this));
+		getCommand("fisherman").setExecutor(new Kit_Fisherman(this));
 		getCommand("stats").setExecutor(new Stats(this));
 		getCommand("kitshop").setExecutor(new KitShop(this));
 		getCommand("kits").setExecutor(new Kits(this));
@@ -73,6 +76,7 @@ public class Main extends JavaPlugin {
 		
 		
 		pm.registerEvents(new SniperL(this), this);
+		pm.registerEvents(new FishermanL(this), this);
 	}
 	
 	public void setupConfig() {

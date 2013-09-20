@@ -11,9 +11,11 @@ commands:
     description: Equip the tank kit.
   sniper:
     description: Equip the Sniper kit.
+  fisherman:
+    description: Equip the Fisherman kit.
   kitshop:
     description: View the kit shop and buy kits.
   kits:
     description: List your kits.
   kit:
-    description: Check another player's kit!
+    description: Check another player's kit.

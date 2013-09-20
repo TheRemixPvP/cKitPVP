@@ -42,6 +42,7 @@ public class DeathListener implements Listener {
 		pd.setKills(pd.kills() + 1);
 		PDUtils.getByName(vic.getName()).setDeaths(PDUtils.getByName(vic.getName()).deaths() + 1);
 		k.sendMessage(ChatColor.GREEN + "You earned " + rd + " credits for killing " + vic.getName() + "!");
+		k.setExp(k.getExp() + 10.0F);
 		
 		if(main.getConfig().getBoolean("death-messages") == true) {
 			e.setDeathMessage(ChatColor.DARK_AQUA + k.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + vic.getName());
@@ -62,6 +63,7 @@ public class DeathListener implements Listener {
 		PData pd = PDUtils.getByName(k.getName());
 		pd.setCredits(pd.credits() + rd);
 		pd.setKills(pd.kills() + 1);
+		k.setExp(k.getExp() + 10.0F);
 		
 		if(Settings.deathmessages == true) Bukkit.broadcastMessage(ChatColor.DARK_AQUA + k.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + e.getEntityType());
 	}
