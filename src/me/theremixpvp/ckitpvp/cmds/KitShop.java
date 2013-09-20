@@ -3,7 +3,6 @@ package me.theremixpvp.ckitpvp.cmds;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +15,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
@@ -30,19 +28,18 @@ public class KitShop implements CommandExecutor {
 		plugin = main;
 	}
 	
-	List<String> shopkits = Arrays.asList("sniper", "tank");
-	List<Double> shopkitsp = Arrays.asList(100.0, 10.0);
+	public static HashMap<String, Double> shopkits = new HashMap<String, Double>();
 	
-	//public static HashMap<String, Double> shopkits = new HashMap<String, Double>();
-	
-	/*public static void load(Plugin p) {
+	public static void load(Plugin p) {
 		File f = new File(p.getDataFolder() + "/kitshop.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
 		
-		for(String s : cfg.getStringList("kits")) {
-			double price = cfg.getDouble(s);
-			shopkits.put(s, price);
+		try {
+			shopkits = (HashMap<String, Double>) cfg.getMapList("shop-kits").get(0);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
+		
 		Main.log.log(Level.INFO, "Kitshop loaded.");
 		Main.log.log(Level.INFO, shopkits.toString());
 	}
@@ -50,16 +47,50 @@ public class KitShop implements CommandExecutor {
 	public static void save(Plugin p) {
 		File f = new File(p.getDataFolder() + "/kitshop.yml");
 		FileConfiguration cfg = YamlConfiguration.loadConfiguration(f);
-		ConfigurationSection sec = cfg.createSection("kits");
-		for(String name : shopkits.keySet()) {
-			cfg.set(sec + "." + name, shopkits.get(name));
-		}
+		List<HashMap<String, Double>> tempmap = new ArrayList<HashMap<String,Double>>();
+		tempmap.add(shopkits);
+		cfg.set("shop-kits", tempmap);
 		try {
 			cfg.save(f);
 			Main.log.log(Level.INFO, "Kitshop saved.");
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/*public static void load(Plugin p) {
+		File file = new File(p.getDataFolder() + "/kitshop.yml");
+				try
+				{
+				   BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+				   String l;
+				   while((l = br.readLine()) != null)
+				   {
+				      String[] args = l.split("[,]", 2);
+				      if(args.length != 2)continue;
+				      String k = args[0].replaceAll(" ", "");
+				      double b = (Double) args[1].replaceAll(" ", "");
+				      shopkits.put(k, b);
+				   }
+				   br.close();
+				}
+	}
+	
+	public static void save(Plugin p) {
+		File file = new File(p.getDataFolder() + "/kitshop.yml");
+				try
+				{
+				   BufferedWriter bw = new BufferedWriter(new FileWriter(file));
+				   for(String k : shopkits.keySet())
+				   {
+				      bw.write(p + "," + shopkits.get(p));
+				      bw.newLine();
+				   }
+				   bw.flush();
+				   bw.close();
+				} catch(IOException e) {
+					e.printStackTrace();
+				}
 	}*/
 	
 	

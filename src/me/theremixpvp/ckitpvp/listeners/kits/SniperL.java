@@ -45,7 +45,6 @@ public class SniperL implements Listener {
 			Player p = (Player) e.getEntity();
 			PData pd = PDUtils.getByName(p.getName());
 			if(pd.getKit().equalsIgnoreCase("sniper")) {
-				e.getProjectile().setMetadata("snipera", );
 			}
 		}
 	}
