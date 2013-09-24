@@ -17,11 +17,11 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_VisionMaster implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_VisionMaster(Main plugin) {
 		plugin = main;
 	}
 	
@@ -31,7 +31,7 @@ public class Kit_Fisherman implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!(pd.unlockedkits().contains("VisionMaster")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.visionmaster")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -50,19 +50,19 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
-		inv.addItem(sword);
+		inv.addItem(new ItemStack(Material.IRON_SWORD));
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
+		ItemStack si = new ItemStack(Material.NETHER_STAR);
+		ItemMeta sim = si.getItemMeta();
+		sim.setDisplayName(ChatColor.GREEN + "VisionArrow Gun");
+		si.setItemMeta(sim);
+		inv.addItem(si);
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
-				new ItemStack(Material.CHAINMAIL_HELMET),
+				new ItemStack(Material.IRON_BOOTS),
+				new ItemStack(Material.IRON_LEGGINGS),
+				new ItemStack(Material.IRON_CHESTPLATE),
+				new ItemStack(Material.GLASS),
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -73,9 +73,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "VisionMaster kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		pd.setKit("VisionMaster");
 		main.usedkit.add(p);
 		return true;
 	}

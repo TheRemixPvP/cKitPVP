@@ -31,7 +31,7 @@ public class Kit_Sniper implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("sniper"))) {
+		if(!(pd.unlockedkits().contains("Sniper")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.sniper")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -58,7 +58,14 @@ public class Kit_Sniper implements CommandExecutor {
 		bow.addEnchantment(Enchantment.ARROW_DAMAGE, 1);
 		inv.addItem(bow);
 		
-		for(int i = 0; i < 33; i++) {
+		inv.setArmorContents(new ItemStack[] {
+				new ItemStack(Material.CHAINMAIL_BOOTS),
+				new ItemStack(Material.CHAINMAIL_LEGGINGS),
+				new ItemStack(Material.CHAINMAIL_CHESTPLATE),
+				new ItemStack(Material.DIAMOND_HELMET),
+		});
+		
+		for(int i = 0; i < 32; i++) {
 			ItemStack soup = new ItemStack(Material.MUSHROOM_SOUP);
 			ItemMeta im = soup.getItemMeta();
 			im.setDisplayName(ChatColor.DARK_AQUA + "Stew");
@@ -69,11 +76,10 @@ public class Kit_Sniper implements CommandExecutor {
 		inv.addItem(new ItemStack(Material.ARROW));
 		
 		p.sendMessage(ChatColor.DARK_AQUA + "Sniper kit equipped!");
-		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 10.0F, 10.0F);
-		PDUtils.getByName(p.getName()).setKit("Sniper");
+		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
+		pd.setKit("Sniper");
 		main.usedkit.add(p);
-		
-		return false;
+		return true;
 	}
 
 }

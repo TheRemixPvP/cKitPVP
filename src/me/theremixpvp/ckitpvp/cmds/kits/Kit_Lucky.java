@@ -5,6 +5,7 @@ import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -15,13 +16,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_Lucky implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_Lucky(Main plugin) {
 		plugin = main;
 	}
 	
@@ -31,7 +33,7 @@ public class Kit_Fisherman implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!(pd.unlockedkits().contains("Lucky")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.lucky")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -50,19 +52,20 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+		ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
+		sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
 		inv.addItem(sword);
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
+		ItemStack h = new ItemStack(Material.LEATHER_HELMET);
+		LeatherArmorMeta hm = (LeatherArmorMeta) h.getItemMeta();
+		hm.setColor(Color.AQUA);
+		h.setItemMeta(hm);
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
-				new ItemStack(Material.CHAINMAIL_HELMET),
+				new ItemStack(Material.IRON_BOOTS),
+				new ItemStack(Material.IRON_LEGGINGS),
+				new ItemStack(Material.IRON_CHESTPLATE),
+				h,
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -73,9 +76,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "Lucky kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		pd.setKit("Lucky");
 		main.usedkit.add(p);
 		return true;
 	}

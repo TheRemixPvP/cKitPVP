@@ -2,7 +2,6 @@ package me.theremixpvp.ckitpvp.cmds.kits;
 
 import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
-import me.theremixpvp.ckitpvp.ShopKit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -67,7 +66,7 @@ public class Kit_PVP implements CommandExecutor {
 		}
 		
 		p.sendMessage(ChatColor.DARK_AQUA + "PVP kit equipped!");
-		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
+		p.playSound(p.getLocation(), Sound.ANVIL_LAND, 7.0F, 7.0F);
 		PDUtils.getByName(p.getName()).setKit("PVP");
 		main.usedkit.add(p);
 		return true;

@@ -58,45 +58,6 @@ public class KitShop implements CommandExecutor {
 		}
 	}
 	
-	/*public static void load(Plugin p) {
-		File file = new File(p.getDataFolder() + "/kitshop.yml");
-				try
-				{
-				   BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-				   String l;
-				   while((l = br.readLine()) != null)
-				   {
-				      String[] args = l.split("[,]", 2);
-				      if(args.length != 2)continue;
-				      String k = args[0].replaceAll(" ", "");
-				      double b = (Double) args[1].replaceAll(" ", "");
-				      shopkits.put(k, b);
-				   }
-				   br.close();
-				}
-	}
-	
-	public static void save(Plugin p) {
-		File file = new File(p.getDataFolder() + "/kitshop.yml");
-				try
-				{
-				   BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-				   for(String k : shopkits.keySet())
-				   {
-				      bw.write(p + "," + shopkits.get(p));
-				      bw.newLine();
-				   }
-				   bw.flush();
-				   bw.close();
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
-	}*/
-	
-	
-	
-	
-	
 	
 	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
@@ -142,15 +103,28 @@ public class KitShop implements CommandExecutor {
 				p.sendMessage(ChatColor.RED + "Invalid kit!");
 				return true;
 				
+			} else if(args[0].equalsIgnoreCase("remove")) {
+				if(sender.hasPermission("ckitpvp.shop.admin")) {
+					String name = args[1];
+					if(shopkits.containsKey(name)) {
+						shopkits.remove(name);
+						sender.sendMessage(ChatColor.DARK_AQUA + "Kit removed.");
+						return true;
+					}
+					sender.sendMessage(ChatColor.RED + "Kit not in the shop!");
+					return true;
+				}
 			}
 			
 		} else if(args.length == 3) {
 			if(args[0].equalsIgnoreCase("add")) {
-				String name = args[1];
-				double price = Double.parseDouble(args[2]);
-				shopkits.put(name, price);
-				sender.sendMessage(ChatColor.DARK_AQUA + "Kit added!");
-				return true;
+				if(sender.hasPermission("ckitpvp.shop.admin")) {
+					String name = args[1];
+					double price = Double.parseDouble(args[2]);
+					shopkits.put(name, price);
+					sender.sendMessage(ChatColor.DARK_AQUA + "Kit added!");
+					return true;
+				}
 			} else {
 				sender.sendMessage(ChatColor.DARK_AQUA + "/kitshop <list:buy> [name]");
 				return true;

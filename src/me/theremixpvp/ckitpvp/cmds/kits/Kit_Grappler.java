@@ -17,11 +17,11 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_Grappler implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_Grappler(Main plugin) {
 		plugin = main;
 	}
 	
@@ -31,7 +31,7 @@ public class Kit_Fisherman implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!(pd.unlockedkits().contains("Grappler")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.grappler")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -50,22 +50,29 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+		ItemStack sword = new ItemStack(Material.IRON_SWORD);
+		sword.addEnchantment(Enchantment.DURABILITY, 1);
 		inv.addItem(sword);
+		ItemStack f = new ItemStack(Material.FISHING_ROD);
+		ItemMeta fm = f.getItemMeta();
+		fm.setDisplayName(ChatColor.GREEN + "Grappling Hook");
+		f.setItemMeta(fm);
+		f.setDurability((short) 32); 
+		f.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
+		inv.addItem(f);
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
+		ItemStack b = new ItemStack(Material.CHAINMAIL_BOOTS);
+		b.addUnsafeEnchantment(Enchantment.PROTECTION_FALL, 10);
+		
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
+				b,
+				new ItemStack(Material.CHAINMAIL_LEGGINGS),
+				new ItemStack(Material.IRON_CHESTPLATE),
 				new ItemStack(Material.CHAINMAIL_HELMET),
 		});
 		
-		for(int i = 0; i < 34; i++) {
+		for(int i = 0; i < 32; i++) {
 			ItemStack soup = new ItemStack(Material.MUSHROOM_SOUP);
 			ItemMeta im = soup.getItemMeta();
 			im.setDisplayName(ChatColor.DARK_AQUA + "Stew");
@@ -73,9 +80,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "Grappler kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		pd.setKit("Grappler");
 		main.usedkit.add(p);
 		return true;
 	}

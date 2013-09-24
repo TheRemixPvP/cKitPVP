@@ -5,6 +5,7 @@ import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -15,13 +16,14 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_Hulk implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_Hulk(Main plugin) {
 		plugin = main;
 	}
 	
@@ -31,7 +33,7 @@ public class Kit_Fisherman implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!(pd.unlockedkits().contains("Hulk")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.hulk")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -50,19 +52,38 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+		ItemStack sword = new ItemStack(Material.IRON_SWORD);
+		sword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
 		inv.addItem(sword);
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
+		ItemStack fwc = new ItemStack(Material.FIREWORK_CHARGE);
+		ItemMeta fwcm = fwc.getItemMeta();
+		fwcm.setDisplayName(ChatColor.GREEN + "Hulk Strength");
+		fwc.setItemMeta(fwcm);
+		inv.addItem(fwc);
+		
+		ItemStack h = new ItemStack(Material.LEATHER_HELMET);
+		ItemStack c = new ItemStack(Material.LEATHER_CHESTPLATE);
+		ItemStack l = new ItemStack(Material.LEATHER_LEGGINGS);
+		ItemStack b = new ItemStack(Material.LEATHER_BOOTS);
+		LeatherArmorMeta hm = (LeatherArmorMeta) h.getItemMeta();
+		LeatherArmorMeta cm = (LeatherArmorMeta) c.getItemMeta();
+		LeatherArmorMeta lm = (LeatherArmorMeta) l.getItemMeta();
+		LeatherArmorMeta bm = (LeatherArmorMeta) b.getItemMeta();
+		hm.setColor(Color.GREEN);
+		cm.setColor(Color.GREEN);
+		lm.setColor(Color.GREEN);
+		bm.setColor(Color.GREEN);
+		h.setItemMeta(hm);
+		c.setItemMeta(cm);
+		l.setItemMeta(lm);
+		b.setItemMeta(bm);
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
-				new ItemStack(Material.CHAINMAIL_HELMET),
+				b,
+				l,
+				c,
+				h,
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -73,9 +94,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "Hulk kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		pd.setKit("Hulk");
 		main.usedkit.add(p);
 		return true;
 	}

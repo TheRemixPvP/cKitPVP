@@ -31,7 +31,7 @@ public class Kit_Tank implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("tank"))) {
+		if(!(pd.unlockedkits().contains("Tank")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.tank")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}

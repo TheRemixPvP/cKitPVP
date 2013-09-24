@@ -2,14 +2,19 @@ package me.theremixpvp.ckitpvp;
 
 import java.util.ArrayList;
 
+import org.bukkit.inventory.Inventory;
+
 public class PData {
 	
 	private String name;
 	private double credits;
+	private int lvl;
+	private float xp;
 	private String kit;
 	private int kills;
 	private int deaths;
 	private ArrayList<String> unlockedkits = new ArrayList<String>();
+	private Inventory bank;
 	
 	public PData(String name) {
 		this.name = name;
@@ -25,6 +30,22 @@ public class PData {
 	
 	public void setCredits(double credits) {
 		this.credits = credits;
+	}
+	
+	public int lvl() {
+		return this.lvl;
+	}
+	
+	public void setLvl(int lvl) {
+		this.lvl = lvl;
+	}
+	
+	public float xp() {
+		return this.xp;
+	}
+	
+	public void setXP(float xp) {
+		this.xp = xp;
 	}
 	
 	public int kills() {
@@ -57,6 +78,14 @@ public class PData {
 	
 	public void setKit(String kit) {
 		this.kit = kit;
+	}
+	
+	public Inventory getBank() {
+		return this.bank;
+	}
+	
+	public void setBank(Inventory bank) {
+		this.bank = bank;
 	}
 
 }

@@ -3,7 +3,6 @@ package me.theremixpvp.ckitpvp.cmds.kits;
 import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
-import me.theremixpvp.ckitpvp.ShopKit;
 
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;

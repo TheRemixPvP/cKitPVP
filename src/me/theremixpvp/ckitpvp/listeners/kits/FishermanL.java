@@ -4,6 +4,7 @@ import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
 
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -20,13 +21,23 @@ public class FishermanL implements Listener {
 	@EventHandler
     public void onPlayerFished(final PlayerFishEvent event) {
             final Player player = event.getPlayer();
-            if(PDUtils.getByName(player.getName()).getKit().equalsIgnoreCase("fisherman")) {
+            if(PDUtils.getByName(player.getName()).getKit() != null && PDUtils.getByName(player.getName()).getKit().equalsIgnoreCase("fisherman")) {
             if (event.getCaught() instanceof Player) {
                     final Player caught = (Player) event.getCaught();
                             if (player.getItemInHand().getType() == Material.FISHING_ROD) {
                                     caught.teleport(player.getLocation());
                             }
                     }
+            	final Entity caught = event.getCaught();
+            	if(PDUtils.getByName(player.getName()).getKit() != null && PDUtils.getByName(player.getName()).getKit().equalsIgnoreCase("fisherman")) {
+            		if (player.getItemInHand().getType() == Material.FISHING_ROD) {
+                        if(caught != null) {
+                        	caught.getLocation().setY(player.getLocation().getY() - 2);
+                        	caught.teleport(player.getLocation());
+                        	caught.setVelocity(player.getVelocity());
+                        }
+                	}
+            	}
             }
     }
 

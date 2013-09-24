@@ -24,12 +24,12 @@ public class Kit implements CommandExecutor {
 			sender.sendMessage(ChatColor.DARK_AQUA + "/kit <player>");
 			return true;
 		} else if(args.length == 1) {
-			if(Bukkit.getPlayer(args[1]) == null) {
+			if(Bukkit.getPlayer(args[0]) == null) {
 				sender.sendMessage(ChatColor.RED + "Invalid player!");
 				return true;
 			}
 			
-			Player p = Bukkit.getPlayer(args[1]);
+			Player p = Bukkit.getPlayer(args[0]);
 			PData pd = PDUtils.getByName(p.getName());
 			String kit = pd.getKit();
 			sender.sendMessage(ChatColor.DARK_AQUA + p.getName() + "'s Kit: " + kit);

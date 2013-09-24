@@ -5,20 +5,21 @@ import java.util.Random;
 import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
+import me.theremixpvp.ckitpvp.utils.Settings;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageCause;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
+import org.bukkit.metadata.FixedMetadataValue;
 
 public class SniperL implements Listener {
 	
@@ -29,46 +30,69 @@ public class SniperL implements Listener {
 	}
 	
 	@EventHandler
-	public void onProjectileHit(ProjectileHitEvent e) {
-		if(e.getEntity().getShooter() instanceof Player) {
-			Player p = (Player) e.getEntity().getShooter();
-			PData pd = PDUtils.getByName(p.getName());
-			
-			if(pd.getKit().equalsIgnoreCase("sniper")) {
-			}
-		}
-	}
-	
-	@EventHandler
-	public void onBowShoot(EntityShootBowEvent e) {
+	public void BowShoot(EntityShootBowEvent e) {
 		if(e.getEntity() instanceof Player) {
 			Player p = (Player) e.getEntity();
-			PData pd = PDUtils.getByName(p.getName());
-			if(pd.getKit().equalsIgnoreCase("sniper")) {
+			if(PDUtils.getByName(p.getName()).getKit() != null && PDUtils.getByName(p.getName()).getKit().equalsIgnoreCase("Sniper")) {
+				e.getProjectile().setMetadata("isSniperBullet", new FixedMetadataValue(main.p, true));
 			}
+			
 		}
 	}
 	
 	@EventHandler
-	public void onEntityHit(EntityDamageByEntityEvent e) {
-		if(e.getCause() == DamageCause.PROJECTILE && e.getDamager() instanceof Player) {
-			Player p = (Player) e.getDamager();
+	public void SniperBulletHit(EntityDamageByEntityEvent e) {
+		if(e.getDamager().hasMetadata("isSniperBullet")) {
+			Arrow a = (Arrow) e.getDamager();
+			Player p = (Player) a.getShooter();
 			PData pd = PDUtils.getByName(p.getName());
-			if(pd.getKit().equalsIgnoreCase("sniper")) {
-				e.setDamage(100000);
+			if(pd.getKit() != null && pd.getKit().equalsIgnoreCase("Sniper")) {
+				e.setDamage(50);
 				p.getInventory().addItem(new ItemStack(Material.ARROW));
-				Random rand = new Random();
-				int ri = rand.nextInt(10) + 1;
-				double rd = ri;
-				pd.setCredits(pd.credits() + rd);
-				if(e.getEntityType() == EntityType.PLAYER) {
-					Player v = (Player) e.getEntity();
-					p.sendMessage(ChatColor.GREEN + "You earned " + rd + " credits for killing " + v.getName() + "!");
+				if(e.getEntity() instanceof Player) {
+					Player vic = (Player) e.getEntity();
+					if(Settings.deathmessages == true) {
+						Bukkit.broadcastMessage(ChatColor.DARK_AQUA + p.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + vic.getName());
+					}
+					Random rand = new Random();
+					int ri = rand.nextInt(10) + 1;
+					double rd = ri;
+					pd.setCredits(pd.credits() + rd);
+					pd.setKills(pd.kills() + 1);
+					PDUtils.getByName(vic.getName()).setDeaths(PDUtils.getByName(vic.getName()).deaths() + 1);
+					p.sendMessage(ChatColor.GREEN + "You earned " + rd + " credits for killing " + vic.getName() + "!");
+				} else {
+					Random rand = new Random();
+					int ri = rand.nextInt(10) + 1;
+					double rd = ri;
+					pd.setCredits(pd.credits() + rd);
+					pd.setKills(pd.kills() + 1);
+					p.sendMessage(ChatColor.GREEN + "You earned " + rd + " credits for killing " + e.getEntityType() + "!");
+					if(Settings.deathmessages == true) Bukkit.broadcastMessage(ChatColor.DARK_AQUA + p.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + e.getEntityType());
 				}
-				p.sendMessage(ChatColor.GREEN + "You earned " + rd + " credits for killing " + e.getEntityType() + "!");
 			}
 		}
 	}
-
+	
+	
+	
+	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e) {
+		if(!(e.getEntity().getKiller() instanceof Player)) return;
+		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
+			e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.ARROW));
+		}
+		
+		
+	}
+	
+	@EventHandler
+	public void onEntityDeath(EntityDeathEvent e) {
+		
+		if(!(e.getEntity().getKiller() instanceof Player)) return;
+		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
+			e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.ARROW));
+		}
+	}
 
 }

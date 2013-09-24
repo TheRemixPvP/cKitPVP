@@ -17,11 +17,11 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_Dodge implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_Dodge(Main plugin) {
 		plugin = main;
 	}
 	
@@ -31,7 +31,7 @@ public class Kit_Fisherman implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!(pd.unlockedkits().contains("Dodge")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.dodge")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -50,19 +50,15 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+		ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
+		sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
 		inv.addItem(sword);
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
-		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
-				new ItemStack(Material.CHAINMAIL_HELMET),
+				new ItemStack(Material.IRON_BOOTS),
+				new ItemStack(Material.IRON_LEGGINGS),
+				new ItemStack(Material.IRON_CHESTPLATE),
+				new ItemStack(Material.IRON_HELMET),
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -73,9 +69,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "Dodge kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		pd.setKit("Dodge");
 		main.usedkit.add(p);
 		return true;
 	}

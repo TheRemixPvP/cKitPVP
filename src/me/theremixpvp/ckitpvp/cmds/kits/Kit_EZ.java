@@ -17,11 +17,11 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_Fisherman implements CommandExecutor {
+public class Kit_EZ implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_Fisherman(Main plugin) {
+	public Kit_EZ(Main plugin) {
 		plugin = main;
 	}
 	
@@ -30,18 +30,21 @@ public class Kit_Fisherman implements CommandExecutor {
 			sender.sendMessage(ChatColor.RED + "Only players can use this commands!");
 			return true;
 		}
+		
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("Fisherman")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.fisherman")) {
+		if(!sender.isOp()) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
 		
 		Player p = (Player)sender;
-		
+
 		if(main.usedkit.contains(p) && !p.isOp()) {
 			p.sendMessage(ChatColor.RED + "Only one kit per life!");
 			return true;
 		}
+		
+		
 		
 		PlayerInventory inv = p.getInventory();
 		
@@ -50,19 +53,28 @@ public class Kit_Fisherman implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		ItemStack sword = new ItemStack(Material.STONE_SWORD);
-		sword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+		ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
+		sword.addEnchantment(Enchantment.DAMAGE_ALL, 5);
+		sword.addEnchantment(Enchantment.FIRE_ASPECT, 2);
 		inv.addItem(sword);
 		
-		ItemStack pole = new ItemStack(Material.FISHING_ROD);
-		pole.addUnsafeEnchantment(Enchantment.DURABILITY, 5);
-		inv.addItem(pole);
+		ItemStack h = new ItemStack(Material.DIAMOND_HELMET);
+		h.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+		
+		ItemStack c = new ItemStack(Material.DIAMOND_CHESTPLATE);
+		c.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+		
+		ItemStack l = new ItemStack(Material.DIAMOND_LEGGINGS);
+		l.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
+		
+		ItemStack b = new ItemStack(Material.DIAMOND_BOOTS);
+		b.addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.LEATHER_BOOTS),
-				new ItemStack(Material.LEATHER_LEGGINGS),
-				new ItemStack(Material.LEATHER_CHESTPLATE),
-				new ItemStack(Material.CHAINMAIL_HELMET),
+				b,
+				l,
+				c,
+				h,
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -73,9 +85,9 @@ public class Kit_Fisherman implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "Fisherman kit equipped!");
-		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("Fisherman");
+		p.sendMessage(ChatColor.DARK_AQUA + "EZ kit equipped!");
+		p.playSound(p.getLocation(), Sound.ANVIL_LAND, 7.0F, 7.0F);
+		PDUtils.getByName(p.getName()).setKit("EZ");
 		main.usedkit.add(p);
 		return true;
 	}

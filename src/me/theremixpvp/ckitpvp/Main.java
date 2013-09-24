@@ -7,37 +7,61 @@ import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import me.theremixpvp.ckitpvp.cmds.Bank;
+import me.theremixpvp.ckitpvp.cmds.Credits;
+import me.theremixpvp.ckitpvp.cmds.Hat;
 import me.theremixpvp.ckitpvp.cmds.Kit;
 import me.theremixpvp.ckitpvp.cmds.KitShop;
 import me.theremixpvp.ckitpvp.cmds.Kits;
+import me.theremixpvp.ckitpvp.cmds.More;
+import me.theremixpvp.ckitpvp.cmds.Soup;
 import me.theremixpvp.ckitpvp.cmds.Stats;
+import me.theremixpvp.ckitpvp.cmds.Test;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Dodge;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_EZ;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Fisherman;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Grappler;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Hulk;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Lucky;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_PVP;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Rusher;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Sniper;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Tank;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_VisionMaster;
 import me.theremixpvp.ckitpvp.listeners.DeathListener;
 import me.theremixpvp.ckitpvp.listeners.JoinListener;
+import me.theremixpvp.ckitpvp.listeners.SoupL;
+import me.theremixpvp.ckitpvp.listeners.kits.DodgeL;
 import me.theremixpvp.ckitpvp.listeners.kits.FishermanL;
+import me.theremixpvp.ckitpvp.listeners.kits.GrapplerL;
+import me.theremixpvp.ckitpvp.listeners.kits.HulkL;
+import me.theremixpvp.ckitpvp.listeners.kits.LuckyL;
+import me.theremixpvp.ckitpvp.listeners.kits.RusherL;
 import me.theremixpvp.ckitpvp.listeners.kits.SniperL;
+import me.theremixpvp.ckitpvp.listeners.kits.VisionMasterL;
 import me.theremixpvp.ckitpvp.utils.Settings;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.server.PluginEvent;
 
 public class Main extends JavaPlugin {
 	
 	public static Logger log = Logger.getLogger("Minecraft");
 	
 	public static HashMap<String, PData> pdata = new HashMap<String, PData>();
-	public static ArrayList<ShopKit> shopkits = new ArrayList<ShopKit>();
 	public static ArrayList<Player> usedkit = new ArrayList<Player>();
 	PluginManager pm = Bukkit.getServer().getPluginManager();
 	
+	public static Plugin p;
+	
 	public void onEnable() {
+		p = this;
 		executors();
 		listeners();
 		setupConfig();
@@ -61,22 +85,43 @@ public class Main extends JavaPlugin {
 	public void executors() {
 		getCommand("pvp").setExecutor(new Kit_PVP(this));
 		getCommand("tank").setExecutor(new Kit_Tank(this));
-		getCommand("sniper").setExecutor(new Kit_Sniper(this));
 		getCommand("fisherman").setExecutor(new Kit_Fisherman(this));
+		getCommand("grappler").setExecutor(new Kit_Grappler(this));
+		getCommand("hulk").setExecutor(new Kit_Hulk(this));
+		getCommand("dodge").setExecutor(new Kit_Dodge(this));
+		getCommand("lucky").setExecutor(new Kit_Lucky(this));
+		getCommand("ez").setExecutor(new Kit_EZ(this));
+		getCommand("rusher").setExecutor(new Kit_Rusher(this));
+		getCommand("sniper").setExecutor(new Kit_Sniper(this));
+		getCommand("visionmaster").setExecutor(new Kit_VisionMaster(this));
 		getCommand("stats").setExecutor(new Stats(this));
+		getCommand("credits").setExecutor(new Credits(this));
 		getCommand("kitshop").setExecutor(new KitShop(this));
 		getCommand("kits").setExecutor(new Kits(this));
 		getCommand("kit").setExecutor(new Kit(this));
+		getCommand("bank").setExecutor(new Bank(this));
+		getCommand("soup").setExecutor(new Soup(this));
+		getCommand("test").setExecutor(new Test(this));
+		getCommand("hat").setExecutor(new Hat(this));
+		getCommand("more").setExecutor(new More(this));
+		//getCommand("ss").setExecutor(new SuperSoup(this));
 	}
 	
 	public void listeners() {
 		pm.registerEvents(new DeathListener(this), this);
 		pm.registerEvents(new JoinListener(this), this);
+		pm.registerEvents(new SoupL(this), this);
+		pm.registerEvents(new Test(this), this);
 		
 		
-		
-		pm.registerEvents(new SniperL(this), this);
 		pm.registerEvents(new FishermanL(this), this);
+		pm.registerEvents(new GrapplerL(this), this);
+		pm.registerEvents(new HulkL(this), this);
+		pm.registerEvents(new DodgeL(this), this);
+		pm.registerEvents(new LuckyL(this), this);
+		pm.registerEvents(new RusherL(this), this);
+		pm.registerEvents(new SniperL(this), this);
+		pm.registerEvents(new VisionMasterL(this), this);
 	}
 	
 	public void setupConfig() {
