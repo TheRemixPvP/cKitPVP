@@ -26,6 +26,7 @@ public class JoinListener implements Listener {
 			pd.setDeaths(0);
 			main.pdata.put(e.getPlayer().getName(), pd);
 		}
+		e.getPlayer().sendMessage(ChatColor.GREEN + "Plugin coded by " + ChatColor.RED + "" + ChatColor.BOLD + "TheRemixPvP");
 	}
 	
 	@EventHandler

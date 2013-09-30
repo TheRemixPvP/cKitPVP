@@ -2,7 +2,6 @@ name: cKitPVP
 main: me.theremixpvp.ckitpvp.Main
 version: 0.7
 author: TheRemixPvP
-depend: [cShared]
 commands:
   stats:
     description: Get stats on yourself or other players.
@@ -13,35 +12,28 @@ commands:
     description: Equip the PVP kit.
   tank:
     description: Equip the tank kit.
-    permission: ckitpvp.kit.tank
   fisherman:
     description: Equip the Fisherman kit.
-    permission: ckitpvp.kit.fisherman
   grappler:
     description: Equip the Grappler kit.
-    permission: ckitpvp.kit.grappler
   hulk:
     description: Equip the Hulk kit.
-    permission: ckitpvp.kit.hulk
   dodge:
     description: Equip the Dodge kit.
-    permission: ckitpvp.kit.dodge
   lucky:
     description: Equip the Lucky kit.
-    permission: ckitpvp.kit.lucky
   rusher:
     description: Equip the Rusher kit.
-    permission: ckitpvp.kit.rusher
   sniper:
     description: Equip the Sniper kit.
-    permission: ckitpvp.kit.sniper
   visionmaster:
     description: Equip the VisionMaster kit.
-    permission: ckitpvp.kit.visionmaster
   ez:
     description: Equip the EZ kit.
-  kitshop:
-    description: View the kit shop and buy kits.
+  acrobat:
+    description: Equip the Acrobat kit.
+  ninja:
+    description: Equip the Ninja kit.
   kits:
     description: List your kits.
   kit:
@@ -56,6 +48,8 @@ commands:
     description: Get a hat…duh….
   more:
     description: Get a stack of the item you're holding.
+  shop:
+    description: Open the shop.
 permissions:
   ckitpvp.admin:
     description: Admin commands
@@ -75,33 +69,3 @@ permissions:
   ckitpvp.bank.reset:
     description: Reset someone's bank
     permission: ckitpvp.bank.reset
-  ckitpvp.kit.*:
-    permission: ckitpvp.kit.*
-    children:
-    - ckitpvp.kit.dodge
-    - ckitpvp.kit.fisherman
-    - ckitpvp.kit.grappler
-    - ckitpvp.kit.hulk
-    - ckitpvp.kit.lucky
-    - ckitpvp.kit.tank
-    - ckitpvp.kit.rusher
-    - ckitpvp.kit.sniper
-    - ckitpvp.kit.visionmaster
-  ckitpvp.kit.dodge:
-    permission: ckitpvp.kit.dodge
-  ckitpvp.kit.fisherman:
-    permission: ckitpvp.kit.fisherman
-  ckitpvp.kit.grappler:
-    permission: ckitpvp.kit.grappler
-  ckitpvp.kit.hulk:
-    permission: ckitpvp.kit.hulk
-  ckitpvp.kit.lucky:
-    permission: ckitpvp.kit.lucky
-  ckitpvp.kit.tank:
-    permission: ckitpvp.kit.tank
-  ckitpvp.kit.rusher:
-    permission: ckitpvp.kit.rusher
-  ckitpvp.kit.sniper:
-    permission: ckitpvp.kit.sniper
-  ckitpvp.kit.visionmaster:
-    permission: ckitpvp.kit.sniper

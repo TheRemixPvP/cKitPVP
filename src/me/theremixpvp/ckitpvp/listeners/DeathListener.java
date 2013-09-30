@@ -25,34 +25,11 @@ public class DeathListener implements Listener {
 		plugin = main;
 	}
 	
-	private HashMap<String, Integer> xp = new HashMap<String, Integer>();
-	
-	/*@EventHandler
-	public void onPlayerRespawn(PlayerRespawnEvent e) {
-		final Player p = e.getPlayer();
-			Bukkit.getScheduler().scheduleSyncDelayedTask(main.p, new Runnable() {
-				@Override
-				public void run() {
-					p.sendMessage(ChatColor.DARK_AQUA + "You magically regained your experience!");
-					int lvl = PDUtils.getByName(p.getName()).lvl();
-					p.setLevel(lvl);
-					xp.remove(p.getName());
-				}
-			}, 60);
-	}*/
-	
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		main.usedkit.remove(e.getEntity().getPlayer());
-		Player vic = e.getEntity().getPlayer();
-		if(!(vic.getKiller() instanceof Player)) {
-			int lvls = vic.getLevel();
-			xp.put(vic.getName(), lvls);
-			PDUtils.getByName(vic.getName()).setKit(null);
-			return;
-		}
+		Player vic = e.getEntity();
 		int lvls = vic.getLevel();
-		xp.put(vic.getName(), lvls);
 		Player k = vic.getKiller();
 		Random rand = new Random();
 		int ri = rand.nextInt(10) + 1;

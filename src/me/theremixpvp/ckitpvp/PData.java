@@ -8,8 +8,6 @@ public class PData {
 	
 	private String name;
 	private double credits;
-	private int lvl;
-	private float xp;
 	private String kit;
 	private int kills;
 	private int deaths;
@@ -30,22 +28,6 @@ public class PData {
 	
 	public void setCredits(double credits) {
 		this.credits = credits;
-	}
-	
-	public int lvl() {
-		return this.lvl;
-	}
-	
-	public void setLvl(int lvl) {
-		this.lvl = lvl;
-	}
-	
-	public float xp() {
-		return this.xp;
-	}
-	
-	public void setXP(float xp) {
-		this.xp = xp;
 	}
 	
 	public int kills() {

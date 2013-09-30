@@ -47,7 +47,7 @@ public class SniperL implements Listener {
 			Player p = (Player) a.getShooter();
 			PData pd = PDUtils.getByName(p.getName());
 			if(pd.getKit() != null && pd.getKit().equalsIgnoreCase("Sniper")) {
-				e.setDamage(50);
+				e.setDamage(100);
 				p.getInventory().addItem(new ItemStack(Material.ARROW));
 				if(e.getEntity() instanceof Player) {
 					Player vic = (Player) e.getEntity();
@@ -79,7 +79,7 @@ public class SniperL implements Listener {
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		if(!(e.getEntity().getKiller() instanceof Player)) return;
-		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
+		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit() != null && PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
 			e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.ARROW));
 		}
 		
@@ -90,7 +90,7 @@ public class SniperL implements Listener {
 	public void onEntityDeath(EntityDeathEvent e) {
 		
 		if(!(e.getEntity().getKiller() instanceof Player)) return;
-		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
+		if(PDUtils.getByName(e.getEntity().getKiller().getName()).getKit() != null && PDUtils.getByName(e.getEntity().getKiller().getName()).getKit().equalsIgnoreCase("Sniper") && e.getEntity().getKiller().getItemInHand().getType() != Material.BOW) {
 			e.getEntity().getKiller().getInventory().addItem(new ItemStack(Material.ARROW));
 		}
 	}

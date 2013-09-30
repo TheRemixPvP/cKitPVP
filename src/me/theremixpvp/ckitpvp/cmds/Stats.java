@@ -55,8 +55,6 @@ public class Stats implements CommandExecutor {
 				pd.setCredits(0);
 				pd.setDeaths(0);
 				pd.setKills(0);
-				pd.setLvl(0);
-				pd.setXP(0F);
 				sender.sendMessage(ChatColor.DARK_AQUA + pd.name() + "'s stats cleared!");
 				return true;
 			}

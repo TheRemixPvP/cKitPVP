@@ -32,23 +32,10 @@ public class Bank implements CommandExecutor {
 		
 		if(args.length == 0) {
 			PData pd = PDUtils.getByName(p.getName());
-			
-			if(pd.getBank() != null) {
-				p.openInventory(pd.getBank());
-				return true;
-			}
-			if(p.hasPermission("ckitpvp.bank.large")) {
-				Inventory inv = Bukkit.createInventory(p, 54);
-				p.openInventory(inv);
-				pd.setBank(inv);
-				return true;
-			} else if(p.hasPermission("ckitpvp.bank.small")) {
-				Inventory inv = Bukkit.createInventory(p, 27);
-				p.openInventory(inv);
-				pd.setBank(inv);
-				return true;
-			}
-			p.sendMessage(ChatColor.RED + "You don't own a bank!");
+
+			Inventory inv = p.getEnderChest();
+			p.openInventory(inv);
+			p.sendMessage(ChatColor.GOLD + "Bank opened.");
 			return true;
 		} else if(args.length == 1 && args[0].equalsIgnoreCase("reset")) {
 			if(!(p.hasPermission("ckitpvp.bank.reset"))) return true;

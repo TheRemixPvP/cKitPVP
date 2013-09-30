@@ -32,7 +32,7 @@ public class VisionMasterL implements Listener {
 	@EventHandler
 	public void StarShoot(PlayerInteractEvent e) {
 		PData pd = PDUtils.getByName(e.getPlayer().getName());
-		if(pd.getKit().equalsIgnoreCase("VisionMaster") && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
+		if(pd.getKit() != null && pd.getKit().equalsIgnoreCase("VisionMaster") && e.getPlayer().getItemInHand().getType() == Material.NETHER_STAR) {
 			final Player p = e.getPlayer();
 			if(sc.contains(p)) {
 				p.sendMessage(ChatColor.RED + "Please wait a second to shoot your VisionArrow again!");
