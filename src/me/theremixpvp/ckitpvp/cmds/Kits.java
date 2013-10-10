@@ -1,5 +1,8 @@
 package me.theremixpvp.ckitpvp.cmds;
 
+import java.util.Arrays;
+import java.util.List;
+
 import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
@@ -19,6 +22,8 @@ public class Kits implements CommandExecutor {
 		plugin = main;
 	}
 	
+	private List<String> defkits = Arrays.asList("PvP", "Archer");
+	
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		
 		if(args.length == 0) {
@@ -28,21 +33,27 @@ public class Kits implements CommandExecutor {
 			}
 			Player p = (Player) sender;
 			PData pd = PDUtils.getByName(p.getName());
-			String s = null;
-			String n = null;
-			for(String kn : Settings.kits) {
-				if(p.isOp() || p.hasPermission("ckitpvp.kit." + kn) || pd.unlockedkits().contains(kn)) {
-					s = s + ChatColor.GREEN + kn + ChatColor.GRAY + ", ";
+			String kits = "";
+			for(String defk : Settings.defaultkits) {
+				defk = ChatColor.GREEN + defk + ChatColor.GRAY + ", " + ChatColor.RESET;
+				kits = kits + defk;
+			}
+			String otherkits = "";
+			for(String kit : Settings.kits) {
+				if(p.isOp() || p.hasPermission("ckitpvp.kit." + kit) || pd.unlockedkits().contains(kit)) {
+					kit = ChatColor.GREEN + kit + ChatColor.GRAY + ", " + ChatColor.RESET;
+					kits = kits + kit;
 				} else {
-					n = n + ChatColor.RED + kn + ChatColor.GRAY + ", ";
+					kit = ChatColor.RED + kit + ChatColor.GRAY + ", " + ChatColor.RESET;
+					otherkits = otherkits + kit;
 				}
 				
 			}
+			if(kits.length() != 0) kits = kits.substring(0, kits.length() - 2);
+			if(otherkits.length() != 0) otherkits = otherkits.substring(0, otherkits.length() - 2);
+			p.sendMessage(ChatColor.GREEN + "Your Kits" + ChatColor.GRAY + ": " + kits);
+			p.sendMessage(ChatColor.RED + "Other Kits" + ChatColor.GRAY + ": " + otherkits);
 			
-			p.sendMessage(ChatColor.GREEN + "Your kits" + ChatColor.GRAY + ": ");
-			if(s.length() != 0) p.sendMessage(s.substring(s.length() - 2));
-			p.sendMessage(ChatColor.RED + "Other kits" + ChatColor.GRAY + ": ");
-			if(n.length() != 0) p.sendMessage(n.substring(n.length() - 2));
 			return true;
 		} else if(args.length == 2) {
 			if(args[0].equalsIgnoreCase("add")) {

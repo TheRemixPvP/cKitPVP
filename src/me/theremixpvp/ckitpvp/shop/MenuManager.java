@@ -39,7 +39,7 @@ public class MenuManager {
 		return i.getItem();
 	}
 	
-	public void giveKit(String k, double price, Player p) {
+	public void giveKit(String k, int price, Player p) {
 		PData pd = PDUtils.getByName(p.getName());
 		
 		if(pd.unlockedkits().contains(k) || p.hasPermission("ckitpvp.kit." + k)) {

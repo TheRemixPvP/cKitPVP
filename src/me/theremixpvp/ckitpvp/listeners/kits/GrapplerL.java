@@ -6,15 +6,11 @@ import me.theremixpvp.ckitpvp.Main;
 import me.theremixpvp.ckitpvp.PDUtils;
 import me.theremixpvp.ckitpvp.PData;
 
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Fish;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerFishEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.util.Vector;
 
 public class GrapplerL implements Listener {

@@ -12,9 +12,9 @@ public class ShopItem {
 	
 	private ItemStack item = null;
 	
-	private double price = 0;
+	private int price = 0;
 	
-	public ShopItem(String name, ItemStack item, List<String> info, double price) {
+	public ShopItem(String name, ItemStack item, List<String> info, int price) {
 		this.name = name;
 		this.info = info;
 		this.item = item;
@@ -37,11 +37,11 @@ public class ShopItem {
 		this.item = item;
 	}
 	
-	public double getPrice() {
+	public int getPrice() {
 		return price;
 	}
 	
-	public void setPrice(double price) {
+	public void setPrice(int price) {
 		this.price = price;
 	}
 

@@ -17,6 +17,8 @@ import me.theremixpvp.ckitpvp.cmds.Soup;
 import me.theremixpvp.ckitpvp.cmds.Stats;
 import me.theremixpvp.ckitpvp.cmds.Test;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Acrobat;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Archer;
+import me.theremixpvp.ckitpvp.cmds.kits.Kit_Bomber;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Dodge;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_EZ;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_Fisherman;
@@ -31,8 +33,11 @@ import me.theremixpvp.ckitpvp.cmds.kits.Kit_Tank;
 import me.theremixpvp.ckitpvp.cmds.kits.Kit_VisionMaster;
 import me.theremixpvp.ckitpvp.listeners.DeathListener;
 import me.theremixpvp.ckitpvp.listeners.JoinListener;
+import me.theremixpvp.ckitpvp.listeners.PlayerChat;
+import me.theremixpvp.ckitpvp.listeners.PlayerListener;
 import me.theremixpvp.ckitpvp.listeners.SoupL;
 import me.theremixpvp.ckitpvp.listeners.kits.AcrobatL;
+import me.theremixpvp.ckitpvp.listeners.kits.BomberL;
 import me.theremixpvp.ckitpvp.listeners.kits.DodgeL;
 import me.theremixpvp.ckitpvp.listeners.kits.FishermanL;
 import me.theremixpvp.ckitpvp.listeners.kits.GrapplerL;
@@ -42,8 +47,8 @@ import me.theremixpvp.ckitpvp.listeners.kits.NinjaL;
 import me.theremixpvp.ckitpvp.listeners.kits.RusherL;
 import me.theremixpvp.ckitpvp.listeners.kits.SniperL;
 import me.theremixpvp.ckitpvp.listeners.kits.VisionMasterL;
+import me.theremixpvp.ckitpvp.playerdata.PDCommand;
 import me.theremixpvp.ckitpvp.shop.ShopCmd;
-import me.theremixpvp.ckitpvp.shop.ShopMenu;
 import me.theremixpvp.ckitpvp.utils.Settings;
 
 import org.bukkit.Bukkit;
@@ -87,6 +92,7 @@ public class Main extends JavaPlugin {
 	
 	public void executors() {
 		getCommand("pvp").setExecutor(new Kit_PVP(this));
+		getCommand("archer").setExecutor(new Kit_Archer(this));
 		getCommand("tank").setExecutor(new Kit_Tank(this));
 		getCommand("fisherman").setExecutor(new Kit_Fisherman(this));
 		getCommand("grappler").setExecutor(new Kit_Grappler(this));
@@ -99,6 +105,7 @@ public class Main extends JavaPlugin {
 		getCommand("visionmaster").setExecutor(new Kit_VisionMaster(this));
 		getCommand("acrobat").setExecutor(new Kit_Acrobat(this));
 		getCommand("ninja").setExecutor(new Kit_Ninja(this));
+		getCommand("bomber").setExecutor(new Kit_Bomber(this));
 		getCommand("stats").setExecutor(new Stats(this));
 		getCommand("credits").setExecutor(new Credits(this));
 		getCommand("kits").setExecutor(new Kits(this));
@@ -109,6 +116,7 @@ public class Main extends JavaPlugin {
 		getCommand("hat").setExecutor(new Hat(this));
 		getCommand("more").setExecutor(new More(this));
 		getCommand("shop").setExecutor(new ShopCmd());
+		getCommand("playerdata").setExecutor(new PDCommand());
 		//getCommand("ss").setExecutor(new SuperSoup(this));
 	}
 	
@@ -117,6 +125,8 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new JoinListener(this), this);
 		pm.registerEvents(new SoupL(this), this);
 		pm.registerEvents(new Test(this), this);
+		pm.registerEvents(new PlayerChat(), this);
+		pm.registerEvents(new PlayerListener(this), this);
 		//pm.registerEvents(ShopMenu, this);
 		
 		
@@ -130,6 +140,7 @@ public class Main extends JavaPlugin {
 		pm.registerEvents(new VisionMasterL(this), this);
 		pm.registerEvents(new AcrobatL(this), this);
 		pm.registerEvents(new NinjaL(this), this);
+		pm.registerEvents(new BomberL(this), this);
 	}
 	
 	public void loadConfig() {
@@ -156,6 +167,7 @@ public class Main extends JavaPlugin {
 			
 			Settings.deathmessages = cfg.getBoolean("death-messages");
 			Settings.kits = cfg.getStringList("kits");
+			Settings.defaultkits = cfg.getStringList("defaultkits");
 			
 			log.log(Level.INFO, "Settings loaded.");
 		}
@@ -186,6 +198,7 @@ public class Main extends JavaPlugin {
 			
 			cfg.set("death-messages", Settings.deathmessages);
 			cfg.set("kits", Settings.kits);
+			cfg.set("defaultkits", Settings.defaultkits);
 			try {
 	            cfg.save(sf);
             } catch (IOException e) {

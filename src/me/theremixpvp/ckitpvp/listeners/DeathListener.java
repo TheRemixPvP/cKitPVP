@@ -1,21 +1,19 @@
 package me.theremixpvp.ckitpvp.listeners;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Random;
 
 import me.theremixpvp.ckitpvp.Main;
-import me.theremixpvp.ckitpvp.PDUtils;
-import me.theremixpvp.ckitpvp.PData;
-import me.theremixpvp.ckitpvp.utils.Settings;
 
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
-import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 public class DeathListener implements Listener {
 	
@@ -26,6 +24,26 @@ public class DeathListener implements Listener {
 	}
 	
 	@EventHandler
+	public void onPlayerDeath(PlayerDeathEvent e) {
+		Player v = e.getEntity();
+		if(main.usedkit.contains(v)) main.usedkit.remove(v);
+		Player k = v.getKiller();
+		Random r = new Random();
+		int reward = r.nextInt(100) + 1;
+		ItemStack i = new ItemStack(Material.EMERALD);
+		ItemMeta im = i.getItemMeta();
+		im.setDisplayName("" + ChatColor.RESET + reward);
+		im.setLore(Arrays.asList(ChatColor.RESET + v.getName()));
+		i.setItemMeta(im);
+		Location l = v.getLocation();
+		l.setY(l.getBlockY() + 3);
+		k.getWorld().dropItem(l, i);
+		
+		if(main.getConfig().getBoolean("death-messages")) e.setDeathMessage(ChatColor.DARK_AQUA + k.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + v.getName());
+		else e.setDeathMessage(null);
+	}
+	
+	/*@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e) {
 		main.usedkit.remove(e.getEntity().getPlayer());
 		Player vic = e.getEntity();
@@ -64,6 +82,6 @@ public class DeathListener implements Listener {
 		e.setDroppedExp(0);
 		
 		if(Settings.deathmessages == true) Bukkit.broadcastMessage(ChatColor.DARK_AQUA + k.getName() + ChatColor.GRAY + " killed " + ChatColor.DARK_AQUA + e.getEntityType());
-	}
+	}*/
 
 }

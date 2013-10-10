@@ -7,7 +7,7 @@ import org.bukkit.inventory.Inventory;
 public class PData {
 	
 	private String name;
-	private double credits;
+	private int credits;
 	private String kit;
 	private int kills;
 	private int deaths;
@@ -22,11 +22,11 @@ public class PData {
 		return this.name;
 	}
 	
-	public double credits() {
+	public int credits() {
 		return this.credits;
 	}
 	
-	public void setCredits(double credits) {
+	public void setCredits(int credits) {
 		this.credits = credits;
 	}
 	

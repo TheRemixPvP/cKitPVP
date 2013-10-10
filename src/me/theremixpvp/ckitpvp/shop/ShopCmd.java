@@ -3,9 +3,6 @@ package me.theremixpvp.ckitpvp.shop;
 import java.util.Arrays;
 
 import me.theremixpvp.ckitpvp.Main;
-import me.theremixpvp.ckitpvp.PDUtils;
-import me.theremixpvp.ckitpvp.PData;
-import me.theremixpvp.ckitpvp.cmds.kits.Kit_PVP;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -49,8 +46,22 @@ public class ShopCmd implements CommandExecutor {
 					event.setWillClose(false);
 					event.setWillDestroy(false);
 					p.closeInventory();
-					ShopMenu m = Menus.kits;
-					m.open(p);
+					ShopMenu kits = new ShopMenu(ChatColor.AQUA + "" + ChatColor.ITALIC + "Kits", 36, new ShopMenu.OptionClickEventHandler() {
+						@Override
+						public void onOptionClick(OptionClickEvent event) {
+							
+							if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Dodge")) MenuManager.getInstance().giveKit("Dodge", 640, event.getPlayer());
+							if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Fisherman")) MenuManager.getInstance().giveKit("Fisherman", 800, event.getPlayer());
+							if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Hulk")) MenuManager.getInstance().giveKit("Hulk", 700, event.getPlayer());
+							if(event.getItem().getItemMeta().getDisplayName().equalsIgnoreCase("Bomber")) MenuManager.getInstance().giveKit("Bomber", 650, event.getPlayer());
+							
+						}
+					}, Main.p)
+					.setOption(0, new ItemStack(Material.ARROW), "Dodge", "Price: 640C", Arrays.asList(ChatColor.GREEN + "Return ALL projectiles", ChatColor.GREEN + "back to their sender!"))
+					.setOption(1, new ItemStack(Material.FISHING_ROD), "Fisherman", "Price: 800C", Arrays.asList(ChatColor.GREEN + "Reel in with a player on your line", ChatColor.GREEN + "and the player will be teleported to you!"))
+					.setOption(2, new ItemStack(Material.EMERALD), "Hulk", "Price: 700C", Arrays.asList(ChatColor.GREEN + "Use your special hulk strength ball", ChatColor.GREEN + "to activate the power of Hulk!"))
+					.setOption(3, new ItemStack(Material.FIREBALL), "Bomber", "Price: 650C", Arrays.asList(ChatColor.GREEN + "Use your bombs to jar your", ChatColor.GREEN + "enemies with powerful explosions!"));
+					kits.open(p);
 					return;
 				}
 				

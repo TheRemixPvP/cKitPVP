@@ -10,17 +10,18 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
 
-public class Kit_VisionMaster implements CommandExecutor {
+public class Kit_Bomber implements CommandExecutor {
 	
 	Main main;
 	
-	public Kit_VisionMaster(Main plugin) {
+	public Kit_Bomber(Main plugin) {
 		plugin = main;
 	}
 	
@@ -30,7 +31,7 @@ public class Kit_VisionMaster implements CommandExecutor {
 			return true;
 		}
 		PData pd = PDUtils.getByName(sender.getName());
-		if(!(pd.unlockedkits().contains("VisionMaster")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.visionmaster")) {
+		if(!(pd.unlockedkits().contains("Bomber")) && !sender.isOp() && !sender.hasPermission("ckitpvp.kit.bomber")) {
 			sender.sendMessage(ChatColor.RED + "You do not have permission for this kit!");
 			return true;
 		}
@@ -49,19 +50,26 @@ public class Kit_VisionMaster implements CommandExecutor {
 			p.removePotionEffect(pe.getType());
 		}
 		
-		inv.addItem(new ItemStack(Material.IRON_SWORD));
+		inv.addItem(new ItemStack(Material.DIAMOND_SWORD));
 		
-		ItemStack si = new ItemStack(Material.NETHER_STAR);
-		ItemMeta sim = si.getItemMeta();
-		sim.setDisplayName(ChatColor.GREEN + "VisionArrow Gun");
-		si.setItemMeta(sim);
-		inv.addItem(si);
+		ItemStack bombs = new ItemStack(Material.EGG);
+		bombs.setAmount(2);
+		ItemMeta bombmeta = bombs.getItemMeta();
+		bombmeta.setDisplayName(ChatColor.GREEN + "Bomb");
+		bombs.setItemMeta(bombmeta);
+		p.getInventory().addItem(bombs);
+		
+		ItemStack c = new ItemStack(Material.IRON_CHESTPLATE);
+		c.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 5);
+		
+		ItemStack l = new ItemStack(Material.IRON_LEGGINGS);
+		l.addUnsafeEnchantment(Enchantment.PROTECTION_EXPLOSIONS, 5);
 		
 		inv.setArmorContents(new ItemStack[] {
-				new ItemStack(Material.IRON_BOOTS),
-				new ItemStack(Material.IRON_LEGGINGS),
-				new ItemStack(Material.IRON_CHESTPLATE),
-				new ItemStack(Material.GLASS),
+				new ItemStack(Material.LEATHER_BOOTS),
+				l,
+				c,
+				new ItemStack(Material.IRON_HELMET),
 		});
 		
 		for(int i = 0; i < 34; i++) {
@@ -72,9 +80,9 @@ public class Kit_VisionMaster implements CommandExecutor {
 			inv.addItem(soup);
 		}
 		
-		p.sendMessage(ChatColor.DARK_AQUA + "VisionMaster kit equipped!");
+		p.sendMessage(ChatColor.DARK_AQUA + "Bomber kit equipped!");
 		p.playSound(p.getLocation(), Sound.ENDERDRAGON_WINGS, 7.0F, 7.0F);
-		pd.setKit("VisionMaster");
+		pd.setKit("Bomber");
 		main.usedkit.add(p);
 		return true;
 	}

@@ -39,7 +39,7 @@ public class Credits implements CommandExecutor {
 				if(args[0].equalsIgnoreCase("set")) {
 					if(PDUtils.getByName(args[1]) != null) {
 						PData pd = PDUtils.getByName(args[1]);
-						pd.setCredits(Double.parseDouble(args[2]));
+						pd.setCredits(Integer.parseInt(args[2]));
 						sender.sendMessage(ChatColor.GREEN + "Set " + pd.name() + "'s tokens to " + Double.parseDouble(args[2]) + ".");
 						return true;
 					}

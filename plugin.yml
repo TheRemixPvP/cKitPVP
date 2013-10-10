@@ -10,6 +10,8 @@ commands:
     aliases: [cr, c]
   pvp:
     description: Equip the PVP kit.
+  archer:
+    description: Equip the Archer kit.
   tank:
     description: Equip the tank kit.
   fisherman:
@@ -34,6 +36,8 @@ commands:
     description: Equip the Acrobat kit.
   ninja:
     description: Equip the Ninja kit.
+  bomber:
+    description: Equip the Bomber kit.
   kits:
     description: List your kits.
   kit:
@@ -50,6 +54,9 @@ commands:
     description: Get a stack of the item you're holding.
   shop:
     description: Open the shop.
+  playerdata:
+    description: Manipulate player's stats and data
+    aliases: [pdata, pd]
 permissions:
   ckitpvp.admin:
     description: Admin commands
